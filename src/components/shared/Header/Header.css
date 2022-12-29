@@ -1,0 +1,29 @@
+header {
+  padding: 15px 0px;
+  background: white;
+  box-shadow: 4px 3px 10px 0px #e3e3e3;
+}
+
+@media (max-width: 991px) {
+  header {
+    padding: 15px 20px;
+  }
+
+  .nav-menu {
+    position: absolute;
+    top: 0px;
+    width: 250px;
+    height: 100%;
+    background: #ffffff;
+    padding-top: 10px;
+    box-shadow: 4px 3px 10px 0px #e3e3e3;
+  }
+  .nav-menu li {
+    padding-left: 20px;
+  }
+  .nav-menu li a {
+    display: block;
+    padding: 0 10px;
+    margin: 10px 0;
+  }
+}
