@@ -54,21 +54,28 @@ const Header = () => {
                 </Link>
               </li>
               {user?.email ? (
-                <li>
-                  <button
-                    onClick={logoutHandler}
-                    className="text-lg text-red-600 font-semibold pl-10"
-                  >
-                    Log Out
-                  </button>
-                </li>
-              ) : (
                 <>
                   <li>
                     <Link className="text-lg text-black pl-10" to="/my-task">
                       My Task
                     </Link>
                   </li>
+                  <li>
+                    <p className="text-lg text-purple-600 font-bold pl-10">
+                      {user?.displayName}
+                    </p>
+                  </li>
+                  <li>
+                    <button
+                      onClick={logoutHandler}
+                      className="text-lg text-red-600 font-semibold pl-10"
+                    >
+                      Log Out
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
                   <li>
                     <Link
                       className="text-lg text-purple-600 font-semibold pl-10"

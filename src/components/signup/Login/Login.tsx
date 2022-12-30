@@ -1,9 +1,16 @@
 import { useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
+import SmallSpinner from "../../Spinner/SmallSpinner";
 
 const Login = () => {
   // Get Register function from Context
-  const { userLogin } = useContext(AuthContext);
+  const { userLogin, loading, setLoading } = useContext(AuthContext);
+
+  // Navigate and Location
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const loginHandler = (event: any) => {
     event.preventDefault();
@@ -12,11 +19,17 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    userLogin(email, password).then((result: any) => {
-      const user = result.user;
-      console.log(user);
-      form.reset();
-    });
+    userLogin(email, password)
+      .then((result: any) => {
+        const user = result.user;
+        console.log(user);
+        form.reset();
+        navigate(from, { replace: true });
+        setLoading(false);
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
   };
   return (
     <section className="mx-5 md:mx-0">
@@ -50,9 +63,15 @@ const Login = () => {
               className="block w-full bg-purple-600 text-white font-medium py-2 rounded-md"
               type="submit"
             >
-              Login
+              {loading ? <SmallSpinner></SmallSpinner> : "Login"}
             </button>
           </div>
+          <p className="mt-5">
+            New in Task App?{" "}
+            <Link className="text-purple-600 font-medium" to="/register">
+              Register Here
+            </Link>
+          </p>
         </form>
       </div>
     </section>

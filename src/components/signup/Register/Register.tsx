@@ -1,9 +1,17 @@
 import { useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
+import SmallSpinner from "../../Spinner/SmallSpinner";
 
 const Register = () => {
   // Get Register function from Context
-  const { createUser, updateUserProfile } = useContext(AuthContext);
+  const { createUser, updateUserProfile, loading, setLoading } =
+    useContext(AuthContext);
+
+  // Navigate and Location
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const registerHandler = (event: any) => {
     event.preventDefault();
@@ -18,6 +26,8 @@ const Register = () => {
       handleUserUpdateProfile(name);
       console.log(user);
       form.reset();
+      navigate(from, { replace: true });
+      setLoading(false);
     });
   };
 
@@ -71,9 +81,15 @@ const Register = () => {
               className="block w-full bg-purple-600 text-white font-medium py-2 rounded-md"
               type="submit"
             >
-              Register
+              {loading ? <SmallSpinner></SmallSpinner> : "Register"}
             </button>
           </div>
+          <p className="mt-5">
+            Already have an Account{" "}
+            <Link className="text-purple-600 font-medium" to="/login">
+              Login Here
+            </Link>
+          </p>
         </form>
       </div>
     </section>

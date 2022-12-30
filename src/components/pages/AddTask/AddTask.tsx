@@ -1,6 +1,11 @@
-import { Navigate } from "react-router-dom";
+import { useContext } from "react";
+import swal from "sweetalert";
+import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
 
 const AddTask = () => {
+  // Get User from context using useContext
+  const { user } = useContext(AuthContext);
+
   const taskHandler = (event: any) => {
     event.preventDefault();
 
@@ -20,6 +25,7 @@ const AddTask = () => {
       .then((res) => res.json())
       .then((data) => {
         const task = {
+          user_email: user?.email,
           task_name: taskName,
           task_image: data.data.display_url,
         };
@@ -35,7 +41,7 @@ const AddTask = () => {
           .then((data) => {
             if (data.acknowledged) {
               form.reset();
-              <Navigate to="/my-task" replace={true}></Navigate>;
+              swal("Good job!", "Task Added Successfully", "success");
             }
           })
           .catch((error) => console.error(error));
